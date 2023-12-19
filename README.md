@@ -4,7 +4,6 @@
 
 - Azure CLI
 - Terraform
-- Databricks CLI
 - Access to create requested resources
 
 ## Instructions
