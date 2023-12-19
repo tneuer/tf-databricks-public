@@ -17,19 +17,6 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = var.rg_name
-  location = var.location
-}
-
-resource "azurerm_key_vault" "tfstatekv" {
-  name                = var.key_vault_name
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = var.location
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-}
-
 module "vnets" {
   source          = "./modules/vnets"
   rg_name         = var.rg_name
@@ -40,17 +27,16 @@ module "vnets" {
 }
 
 module "db_workspace" {
-  source                                                 = "./modules/db_workspace"
-  rg_name                                                = var.rg_name
-  location                                               = var.location
-  project                                                = var.project
-  vnet_id                                                = module.vnets.vnet_id
-  db_public_subnet_name                                  = module.vnets.db_public_subnet_name
-  db_public_subnet_network_security_group_association_id = module.vnets.db_public_subnet_network_security_group_association_id
-  db_storage_account_name                                = var.db_storage_account_name
-  tags                                                   = local.tags
+  source                  = "./modules/db_workspace"
+  rg_name                 = var.rg_name
+  location                = var.location
+  project                 = var.project
+  db_storage_account_name = var.db_storage_account_name
+  db_storage_subnet_id    = module.vnets.db_storage_subnet_id
+  key_vault_id            = azurerm_key_vault.tfstatekv.id
+  tags                    = local.tags
 }
 
-output "vnets" {
-  value = module.vnets
+output "db_workspace" {
+  value = module.db_workspace
 }

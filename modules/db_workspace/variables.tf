@@ -10,19 +10,15 @@ variable "rg_name" {
   type = string
 }
 
-variable "vnet_id" {
-  type = string
-}
-
-variable "db_public_subnet_name" {
-  type = string
-}
-
-variable "db_public_subnet_network_security_group_association_id" {
-  type = string
-}
-
 variable "db_storage_account_name" {
+  type = string
+}
+
+variable "db_storage_subnet_id" {
+  type = string
+}
+
+variable "key_vault_id" {
   type = string
 }
 

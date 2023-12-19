@@ -5,8 +5,18 @@
 - Azure CLI
 - Terraform
 - Databricks CLI
+- Access to create requested resources
 
-## Commands
+## Instructions
+
+- Run bash from root: ./sh_scripts/1initialize_remote_state.sh
+- Run bash from root: ./sh_scripts/2initialize_github_sp.sh
+- Run bash from root: ./sh_scripts/3imports_terraform.sh
+- Run bash from root: ./sh_scripts/4validate_terraform.sh
+- Run bash from root: ./sh_scripts/5deploy_terraform.sh
+- Run bash from root: ./sh_scripts/6rotate_tokens.sh on a schedule if needed
+
+## Useful commands
 
 sed -i 's/\r$//' ./sh_scripts/*
 terraform force-unlock 1f10a15f-0d1a-3461-ca78-8235b9408f57
@@ -14,7 +24,7 @@ terraform force-unlock 1f10a15f-0d1a-3461-ca78-8235b9408f57
 ### Install Terraform Ubuntu
 
 sudo apt-get install unzip
-# https://www.terraform.io/downloads.html   Get version
+-- https://www.terraform.io/downloads.html   Lookup newest version
 wget https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
 unzip terraform_1.0.7_linux_amd64.zip
 sudo mv terraform /usr/local/bin/
@@ -37,30 +47,17 @@ terraform validate;
 terraform plan -var-file="./variables/dev.tfvars";
 terraform apply -var-file="./variables/dev.tfvars" -auto-approve;
 
-### Show & List
-
-terraform state list
-terraform state show azurerm_resource_group.example
-
 ## Description
 
 - main.tf: Entry point for the terraform deployment.
-- terraform.tfvars: Global variables. Used in every environment.
-- variables.tf: Variable declarations on a global level.
-- initiate_remote_state.azcli: Creates storage account for remote states.
-- variables/*: Environment specific variables.
-- configs/*: Environment specific configurations. Inclduing remote state server.
+- terraform.tfvars: Global variables. Used in every environment as default value for static variables.
+- variables.tf: Variable declarations on a global level, default in terraform.tfvars.
+- ./sh_scripts/*: Shell scripts used for creating necessary resources and creating the databricks instance
+  - 1initiate_remote_state.azcli: Creates storage account for remote states.
+- variables/*: Environment specific variables. Passed via command line to teraform.
+- configs/*: Environment specific configurations. Inclduing remote state server and OICD Git Credentials.
 - modules/*: Modules of the terraform main.tf file.
-
-## Manual setup
-
-- Run PowerShell from root: .\pwsh_scripts\initialize_remote_state.ps1
-- Run PowerShell from root: .\pwsh_scripts\initialize_github_sp.ps1
-- Copy credentials returned from previous command to Github secret with name "AZURE_TERRAFORM_CREDENTIALS"
 
 ## Next steps
 
-- Make diagram
-- Deploy networks & databricks environment using terraform
-- Databricks CLI tutorial
 - Connect via rotating sas token to state

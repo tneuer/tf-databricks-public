@@ -20,3 +20,6 @@ TF_SECRET_NAME='tfstatesecret';
 
 # Github
 GITHUB_TF_SP_NAME='TerraformDevOpsGithubAction'
+
+# Databricks
+DATABRICKS_TF_SP_NAME='DatabricksDevOpsGithubAction'
