@@ -13,10 +13,10 @@ BUILD_RESOURCE_GROUP_NAME_RESOURCES='terraform-databricks-rg'
 # Terraform RG
 TF_RESOURCE_GROUP_NAME='terraform-databricks-rg'
 TF_STORAGE_ACCOUNT_NAME='tfstatefilestoragetn'
-TF_CONTAINER_NAME='tfstatefile'
+TF_CONTAINER_NAME='tfstatefiledeployment'
 TF_KEYVAULT_NAME='terraform-databricks-kv';
-TF_FILE_NAME='terraform_dev.tfstate'
-TF_SECRET_NAME='tfstatesecret';
+TF_FILE_NAME='db_deployment_dev.tfstate'
+TF_SECRET_NAME='dbDeploymentTfstatesecret';
 
 # Github
 GITHUB_TF_SP_NAME='TerraformDevOpsGithubAction'
