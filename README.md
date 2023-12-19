@@ -23,13 +23,17 @@ terraform force-unlock 1f10a15f-0d1a-3461-ca78-8235b9408f57
 
 ### Install Terraform Ubuntu
 
+```console
 sudo apt-get install unzip
 -- https://www.terraform.io/downloads.html   Lookup newest version
 wget https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
 unzip terraform_1.0.7_linux_amd64.zip
 sudo mv terraform /usr/local/bin/
+```
 
 ### Install Github CLI Ubuntu
+
+```console
 VERSION=`curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-`
 wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz
 curl -sSL https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz -o gh_${VERSION}_linux_amd64.tar.gz
@@ -38,6 +42,7 @@ sudo cp gh_${VERSION}_linux_amd64/bin/gh /usr/local/bin/
 sudo cp -r gh_${VERSION}_linux_amd64/share/man/man1/* /usr/share/man/man1/
 rm -r gh_2.40.1_linux_amd64.tar.gz
 rm -r gh_2.40.1_linux_amd64
+```
 
 ### Checks & Apply
 
