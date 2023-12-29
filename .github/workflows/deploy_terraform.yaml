@@ -45,11 +45,23 @@ jobs:
       run: ./sh_scripts/3init_terraform.sh dev
       continue-on-error: true
       shell: bash
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_ACCESS_KEY: ${{ secrets.AZURE_ARM_ACCESS_KEY }}
+        ARM_USE_OIDC: true
     
     - name: Validation step
       if: always()
       run: ./sh_scripts/4validate_terraform.sh dev
       shell: bash
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_ACCESS_KEY: ${{ secrets.AZURE_ARM_ACCESS_KEY }}
+        ARM_USE_OIDC: true
 
     - name: Deployment step
       if: always()
@@ -59,6 +71,7 @@ jobs:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_ACCESS_KEY: ${{ secrets.AZURE_ARM_ACCESS_KEY }}
         ARM_USE_OIDC: true
 
     - name: Azure logout

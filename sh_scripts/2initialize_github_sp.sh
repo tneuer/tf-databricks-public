@@ -9,6 +9,7 @@ source ./sh_scripts/variables.sh $1
 echo Creating service principal $GITHUB_TF_SP_NAME...
 az ad sp create-for-rbac --name $GITHUB_TF_SP_NAME --role reader --scopes /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$TF_RESOURCE_GROUP_NAME
 APP_ID=$(az ad sp list --display-name $GITHUB_TF_SP_NAME --query "[].{spID:appId}" --output tsv);
+ARM_ACCESS_KEY=$(az keyvault secret show --name $TF_SECRET_NAME --vault-name $TF_KEYVAULT_NAME --query value -o tsv);
 
 # Create github configs
 mkdir configs
@@ -28,9 +29,11 @@ az keyvault set-policy --name $TF_KEYVAULT_NAME --spn $APP_ID --secret-permissio
 az ad app federated-credential create --id  $APP_ID --parameters ./configs/$GITHUB_OICD_CREDENTIALS_NAME.json
 az role assignment create --assignee  $APP_ID --role "Storage Account Key Operator Service Role" --subscription $SUBSCRIPTION_ID --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$BUILD_RESOURCE_GROUP_NAME_RESOURCES/providers/Microsoft.Storage/storageAccounts/$TF_STORAGE_ACCOUNT_NAME
 
+ARM_ACCESS_KEY=$(az keyvault secret show --name $TF_SECRET_NAME --vault-name $TF_KEYVAULT_NAME --query value -o tsv);
 # Save to Github
 echo Setting Github secrets...
 # gh auth login
 gh secret set AZURE_CLIENT_ID --body ${APP_ID} --repos $GIT_ROOT/$TF_REPO
 gh secret set AZURE_TENANT_ID --body ${TENANT_ID} --repos $GIT_ROOT/$TF_REPO
 gh secret set AZURE_SUBSCRIPTION_ID --body ${SUBSCRIPTION_ID} --repos $GIT_ROOT/$TF_REPO
+gh secret set AZURE_ARM_ACCESS_KEY --body ${ARM_ACCESS_KEY} --repos $GIT_ROOT/$TF_REPO
