@@ -15,8 +15,8 @@ mkdir configs
 echo '{
     "name": "'$GITHUB_OICD_CREDENTIALS_NAME'",
     "issuer": "https://token.actions.githubusercontent.com",
-    "subject": "'repo:$GIT_ROOT/$TF_REPO:ref:refs/heads/dev'",
-    "description": "Federated identity for push to dev branch.",
+    "subject": "'repo:$GIT_ROOT/$TF_REPO:ref:refs/heads/main'",
+    "description": "Federated identity for push to main branch.",
     "audiences": [
         "api://AzureADTokenExchange"
     ]
