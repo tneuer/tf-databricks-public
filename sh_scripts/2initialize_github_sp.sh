@@ -3,7 +3,7 @@
 # This script is not implemented in terraform because it's a one time setup step which creates the token used in the github actions.
 # This is run once so that afterwards everything else can be deployed via CI/CD Github. This part can't be run by Github because it creates
 # the resources used to authenticate by Github.
-source ./sh_scripts/variables.sh
+source ./sh_scripts/variables.sh $1
 
 # Create the Service Principal
 echo Creating service principal $GITHUB_TF_SP_NAME...

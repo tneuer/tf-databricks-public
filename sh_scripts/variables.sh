@@ -1,30 +1,53 @@
 #!/usr/bin/env bash
+if [ $# -eq 0 ]
+  then
+    echo "No arguments supplied. Needed one of [dev, prod]."
+    exit 1
+fi
+
+if [ $1 = "dev" ]
+then
+    ENV_SUFFIX1="Dev"
+    ENV_SUFFIX2="dev"
+    ENV_SUFFIX3="-dev"
+    ENV_SUFFIX3="_dev"
+elif [ $1 = "prod" ]
+then
+    ENV_SUFFIX1=""
+    ENV_SUFFIX2=""
+    ENV_SUFFIX3=""
+    ENV_SUFFIX4=""
+else
+    echo "Parameter must be one of [dev, prod]."
+    exit 1
+fi
+
 # General
-TENANT_ID=$(az account show | jq -r '.tenantId')
+TENANT_ID=$(az account show | jq -r ".tenantId")
 SUBSCRIPTION_ID=$(az account show --query id --output tsv);
-LOCATION='switzerlandnorth'
-GIT_ROOT='tneuer'
+LOCATION="switzerlandnorth"
+GIT_ROOT="tneuer"
 TF_REPO=$(basename `git rev-parse --show-toplevel`)
-PROJECT_NAME='test-project'
+PROJECT_NAME="test-project"$ENV_SUFFIX3
 
 # Build RG
-BUILD_RESOURCE_GROUP_NAME_RESOURCES='terraform-databricks-rg'
+BUILD_RESOURCE_GROUP_NAME_RESOURCES="terraform-databricks-rg"$ENV_SUFFIX3
 
 # Terraform state backend RG
-TF_RESOURCE_GROUP_NAME='terraform-databricks-rg'
-TF_STORAGE_ACCOUNT_NAME='tfstatefilestoragetn'
-TF_CONTAINER_NAME='tfstatefiledeployment'
-TF_KEYVAULT_NAME='terraform-databricks-kv'
-TF_FILE_NAME='db_deployment_dev.tfstate'
-TF_SECRET_NAME='DBDeploymentTfstatesecret'
+TF_RESOURCE_GROUP_NAME="terraform-databricks-rg"$ENV_SUFFIX3
+TF_STORAGE_ACCOUNT_NAME="tfstatefilestoragetn"$ENV_SUFFIX2
+TF_CONTAINER_NAME="tfstatefiledeployment"$ENV_SUFFIX2
+TF_KEYVAULT_NAME="terraform-databricks-kv"$ENV_SUFFIX3
+TF_FILE_NAME="db_deployment$ENV_SUFFIX4.tfstate"
+TF_SECRET_NAME="DBDeploymentTfstatesecret"$ENV_SUFFIX1
 
 # Networking
-PROJECT_CIDR_RANGE='10.0.0.0/26'
+PROJECT_CIDR_RANGE="10.0.0.0/26"
 
 # Github
-GITHUB_TF_SP_NAME='TerraformDevOpsGithubAction'
-GITHUB_OICD_CREDENTIALS_NAME='Github_OICD_credentials_dev'
+GITHUB_TF_SP_NAME="TerraformDevOpsGithubAction"$ENV_SUFFIX1
+GITHUB_OICD_CREDENTIALS_NAME="Github_OICD_credentials$ENV_SUFFIX4"
 
 # Databricks
-DATABRICKS_TF_SP_NAME='DatabricksDevOpsGithubAction'
-DATABRICKS_METASTORE_STORAGE_ACCOUNT_NAME='databricksstoragetntest'
+DATABRICKS_TF_SP_NAME="DatabricksDevOpsGithubAction"$ENV_SUFFIX1
+DATABRICKS_METASTORE_STORAGE_ACCOUNT_NAME="databricksstoragetntest"$ENV_SUFFIX2
