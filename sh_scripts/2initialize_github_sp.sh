@@ -28,6 +28,7 @@ az role assignment create --assignee-object-id  $APP_ID --role contributor --sub
 az keyvault set-policy --name $TF_KEYVAULT_NAME --spn $APP_ID --secret-permissions get
 az ad app federated-credential create --id  $APP_ID --parameters ./configs/$GITHUB_OICD_CREDENTIALS_NAME.json
 az role assignment create --assignee  $APP_ID --role "Storage Account Key Operator Service Role" --subscription $SUBSCRIPTION_ID --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$BUILD_RESOURCE_GROUP_NAME_RESOURCES/providers/Microsoft.Storage/storageAccounts/$TF_STORAGE_ACCOUNT_NAME
+az role assignment create --assignee  $APP_ID --role "Storage Account Key Operator Service Role" --subscription $SUBSCRIPTION_ID --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$BUILD_RESOURCE_GROUP_NAME_RESOURCES/providers/Microsoft.Storage/storageAccounts/$DATABRICKS_METASTORE_STORAGE_ACCOUNT_NAME
 
 ARM_ACCESS_KEY=$(az keyvault secret show --name $TF_SECRET_NAME --vault-name $TF_KEYVAULT_NAME --query value -o tsv);
 # Save to Github
