@@ -46,7 +46,7 @@ PROJECT_CIDR_RANGE="10.0.0.0/26"
 
 # Github
 GITHUB_TF_SP_NAME="TerraformDevOpsGithubAction"$ENV_SUFFIX1
-GITHUB_OICD_CREDENTIALS_NAME="Github_OICD_credentials$ENV_SUFFIX4"
+GITHUB_OICD_CREDENTIALS_NAME="Github_OICD_credentials_main"
 
 # Databricks
 DATABRICKS_TF_SP_NAME="DatabricksDevOpsGithubAction"$ENV_SUFFIX1
