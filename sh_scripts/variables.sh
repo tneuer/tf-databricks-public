@@ -10,7 +10,7 @@ then
     ENV_SUFFIX1="Dev"
     ENV_SUFFIX2="dev"
     ENV_SUFFIX3="-dev"
-    ENV_SUFFIX3="_dev"
+    ENV_SUFFIX4="_dev"
 elif [ $1 = "prod" ]
 then
     ENV_SUFFIX1=""
@@ -37,7 +37,7 @@ BUILD_RESOURCE_GROUP_NAME_RESOURCES="terraform-databricks-rg"$ENV_SUFFIX3
 TF_RESOURCE_GROUP_NAME="terraform-databricks-rg"$ENV_SUFFIX3
 TF_STORAGE_ACCOUNT_NAME="tfstatefilestoragetn"$ENV_SUFFIX2
 TF_CONTAINER_NAME="tfstatefiledeployment"$ENV_SUFFIX2
-TF_KEYVAULT_NAME="terraform-databricks-kv"$ENV_SUFFIX3
+TF_KEYVAULT_NAME="$PROJECT_NAME-kv"
 TF_FILE_NAME="db_deployment$ENV_SUFFIX4.tfstate"
 TF_SECRET_NAME="DBDeploymentTfstatesecret"$ENV_SUFFIX1
 
@@ -50,4 +50,4 @@ GITHUB_OICD_CREDENTIALS_NAME="Github_OICD_credentials$ENV_SUFFIX4"
 
 # Databricks
 DATABRICKS_TF_SP_NAME="DatabricksDevOpsGithubAction"$ENV_SUFFIX1
-DATABRICKS_METASTORE_STORAGE_ACCOUNT_NAME="databricksstoragetntest"$ENV_SUFFIX2
+DATABRICKS_METASTORE_STORAGE_ACCOUNT_NAME="dbstoragetn"$ENV_SUFFIX2
