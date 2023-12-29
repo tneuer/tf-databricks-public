@@ -45,17 +45,10 @@ variable "db_storage_account_name" {
   type = string
 }
 
-data "azurerm_client_config" "current" {}
-
-data "external" "me" {
-  program = ["az", "account", "show", "--query", "user"]
-}
-
 locals {
   tags = {
     environment = var.environment
     project     = var.project
     source      = "terraform"
-    creator     = lookup(data.external.me.result, "name")
   }
 }
