@@ -26,10 +26,11 @@ echo '{
 az role assignment create --assignee-object-id  $APP_ID --role contributor --subscription $SUBSCRIPTION_ID --assignee-principal-type ServicePrincipal --scope /subscriptions/$SUBSCRIPTION_ID/resourcegroups/$BUILD_RESOURCE_GROUP_NAME_RESOURCES
 az keyvault set-policy --name $TF_KEYVAULT_NAME --spn $APP_ID --secret-permissions get
 az ad app federated-credential create --id  $APP_ID --parameters ./configs/$GITHUB_OICD_CREDENTIALS_NAME.json
+az role assignment create --assignee  $APP_ID --role "Storage Account Key Operator Service Role" --subscription $SUBSCRIPTION_ID --scope /subscriptions/$SUBSCRIPTION_ID/resourceGroups/$BUILD_RESOURCE_GROUP_NAME_RESOURCES/providers/Microsoft.Storage/storageAccounts/$TF_STORAGE_ACCOUNT_NAME
 
 # Save to Github
 echo Setting Github secrets...
 # gh auth login
-gh secret set AZURE_CLIENT_ID --body ${APP_ID} --repos $GIT_ROOT/$TF_REPO;
-gh secret set AZURE_TENANT_ID --body ${TENANT_ID} --repos $GIT_ROOT/$TF_REPO;
-gh secret set AZURE_SUBSCRIPTION_ID --body ${SUBSCRIPTION_ID} --repos $GIT_ROOT/$TF_REPO;
+gh secret set AZURE_CLIENT_ID --body ${APP_ID} --repos $GIT_ROOT/$TF_REPO
+gh secret set AZURE_TENANT_ID --body ${TENANT_ID} --repos $GIT_ROOT/$TF_REPO
+gh secret set AZURE_SUBSCRIPTION_ID --body ${SUBSCRIPTION_ID} --repos $GIT_ROOT/$TF_REPO
