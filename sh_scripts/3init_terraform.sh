@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 source ./sh_scripts/variables.sh $1
-#export ARM_ACCESS_KEY=$(az keyvault secret show --name $TF_SECRET_NAME --vault-name $TF_KEYVAULT_NAME --query value -o tsv);
+export ARM_ACCESS_KEY=$(az keyvault secret show --name $TF_SECRET_NAME --vault-name $TF_KEYVAULT_NAME --query value -o tsv);
 
 # Initialize Terraform backend configs
 echo resource_group_name  = \"$TF_RESOURCE_GROUP_NAME\" > ./configs/config$ENV_SUFFIX4.azure.tfbackend
