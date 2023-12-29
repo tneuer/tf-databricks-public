@@ -42,18 +42,18 @@ jobs:
       shell: bash
 
     - name: Init & Import
-      run: ./sh_scripts/3init_terraform.sh
+      run: ./sh_scripts/3init_terraform.sh dev
       continue-on-error: true
       shell: bash
     
     - name: Validation step
       if: always()
-      run: ./sh_scripts/4validate_terraform.sh
+      run: ./sh_scripts/4validate_terraform.sh dev
       shell: bash
 
     - name: Deployment step
       if: always()
-      run: ./sh_scripts/5deploy_terraform.sh
+      run: ./sh_scripts/5deploy_terraform.sh dev
       shell: bash
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
