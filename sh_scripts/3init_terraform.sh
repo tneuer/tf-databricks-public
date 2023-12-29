@@ -9,6 +9,13 @@ echo container_name  = \"$TF_CONTAINER_NAME\" >> ./configs/config_dev.azure.tfba
 echo key  = \"$TF_FILE_NAME\" >> ./configs/config_dev.azure.tfbackend
 
 # Initialize Terraform variables
+echo location = \"$LOCATION\" > ./terraform.tfvars
+echo project = \"$PROJECT_NAME\" >> ./terraform.tfvars
+echo key_vault_name = \"$TF_KEYVAULT_NAME\" >> ./terraform.tfvars
+echo vnet_cidr_range = \"$PROJECT_CIDR_RANGE\" >> ./terraform.tfvars
+echo rg_name = \"$TF_RESOURCE_GROUP_NAME\" >> ./terraform.tfvars
+echo db_storage_account_name = \"$DATABRICKS_METASTORE_STORAGE_ACCOUNT_NAME\" >> ./terraform.tfvars
+echo >> ./terraform.tfvars
 
 # Init & Import resources
 terraform init -backend-config="./configs/config_dev.azure.tfbackend";
